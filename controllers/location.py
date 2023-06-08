@@ -1,6 +1,7 @@
 from services.db import get_db_connection
-from flask import Flask, request, jsonify
+from flask import Blueprint, request, jsonify
 
+ct_location = Blueprint('ct_location', __name__)
 
 def get_locations():
     conn = get_db_connection()
