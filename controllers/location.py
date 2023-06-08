@@ -56,11 +56,11 @@ def create_location():
 def update_location_by_id(id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("""SELECT * FROM location WHERE location_id = ?""", (id,))
+    cursor.execute("""SELECT * FROM location WHERE company_id = ?""", (id,))
     location = cursor.fetchone()
     if location is not None:
         location_data = request.get_json()
-        cursor.execute("""UPDATE location SET location_name = ?, location_country = ?, location_city = ?, location_meta = ? WHERE location_id = ?""", (location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta'], id))
+        cursor.execute("""UPDATE location SET location_name = ?, location_country = ?, location_city = ?, location_meta = ? WHERE company_id = ?""", (location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta'], id))
         conn.commit()
         conn.close()
         return jsonify({"message": "Location updated", "status": 200})
@@ -70,10 +70,10 @@ def update_location_by_id(id):
 def delete_location_by_id(id):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("""SELECT * FROM location WHERE location_id = ?""", (id,))
+    cursor.execute("""SELECT * FROM location WHERE company_id = ?""", (id,))
     location = cursor.fetchone()
     if location is not None:
-        cursor.execute("""DELETE FROM location WHERE location_id = ?""", (id,))
+        cursor.execute("""DELETE FROM location WHERE company_id = ?""", (id,))
         conn.commit()
         conn.close()
         return jsonify({"message": "Location deleted", "status": 200})
