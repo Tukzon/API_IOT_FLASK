@@ -28,12 +28,11 @@ def create_tables():
 
     #LOCATION
     cursor.execute("""CREATE TABLE IF NOT EXISTS location(
-        location_id INTEGER PRIMARY KEY AUTOINCREMENT,
-        sensor_id INTEGER NOT NULL,
-        sensor_name TEXT NOT NULL,
-        sensor_category TEXT NOT NULL,
-        sensor_meta TEXT NOT NULL,
-        sensor_api_key TEXT NOT NULL
+        company_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        location_name INTEGER NOT NULL,
+        location_country TEXT NOT NULL,
+        location_city TEXT NOT NULL,
+        location_meta TEXT NOT NULL
     )""")
 
     conn.commit()

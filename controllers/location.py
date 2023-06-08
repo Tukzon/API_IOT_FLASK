@@ -13,12 +13,11 @@ def get_locations():
     all_locations = []
     for location in locations:
         new_location = {
-            "location_id": location[0],
-            "sensor_id": location[1],
-            "sensor_name": location[2],
-            "sensor_category": location[3],
-            "sensor_meta": location[4],
-            "sensor_api_key": location[5]
+            "company_id": location[0],
+            "location_name": location[1],
+            "location_county": location[2],
+            "location_city": location[3],
+            "location_meta": location[4]
         }
         all_locations.append(new_location)
     return all_locations
@@ -32,16 +31,27 @@ def get_location_by_id(id):
 
     if location is not None:
         new_location = {
-            "location_id": location[0],
-            "sensor_id": location[1],
-            "sensor_name": location[2],
-            "sensor_category": location[3],
-            "sensor_meta": location[4],
-            "sensor_api_key": location[5]
+            "company_id": location[0],
+            "location_name": location[1],
+            "location_county": location[2],
+            "location_city": location[3],
+            "location_meta": location[4]
         }
-        return new_location
+        return jsonify(new_location, 200)
     else:
-        return "Location not found", 404
+        return jsonify({"message": "Location not found", "status": 404})
+    
+def create_location():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+        location_data = request.get_json()
+        cursor.execute("""INSERT INTO location (location_name, location_country, location_city, location_meta) VALUES (?, ?, ?, ?)""", (location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta']))
+        conn.commit()
+        conn.close()
+        return jsonify({"message": "Location created", "status": 201})
+    except:
+        return jsonify({"message": "Something went wrong", "status": 500})
     
 def update_location_by_id(id):
     conn = get_db_connection()
@@ -50,12 +60,12 @@ def update_location_by_id(id):
     location = cursor.fetchone()
     if location is not None:
         location_data = request.get_json()
-        cursor.execute("""UPDATE location SET sensor_id = ?, sensor_name = ?, sensor_category = ?, sensor_meta = ?, sensor_api_key = ? WHERE location_id = ?""", (location_data['sensor_id'], location_data['sensor_name'], location_data['sensor_category'], location_data['sensor_meta'], location_data['sensor_api_key'], id))
+        cursor.execute("""UPDATE location SET location_name = ?, location_country = ?, location_city = ?, location_meta = ? WHERE location_id = ?""", (location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta'], id))
         conn.commit()
         conn.close()
-        return True
+        return jsonify({"message": "Location updated", "status": 200})
     else:
-        return False
+        return jsonify({"message": "Location not found", "status": 404})
     
 def delete_location_by_id(id):
     conn = get_db_connection()
@@ -66,6 +76,6 @@ def delete_location_by_id(id):
         cursor.execute("""DELETE FROM location WHERE location_id = ?""", (id,))
         conn.commit()
         conn.close()
-        return True
+        return jsonify({"message": "Location deleted", "status": 200})
     else:
-        return False
+        return jsonify({"message": "Location not found", "status": 404})
