@@ -1,9 +1,16 @@
 from flask import Blueprint, request, jsonify
 from services.db import get_db_connection
 
+from controllers import sensor
+
 sensor_bp = Blueprint('sensor_bp', __name__)
 
-@sensor_bp.route('/api/v1/sensors', methods=['GET'])
+@sensor_bp.route('/api/v1/sensor', methods=['POST'])
+def create_sensor():
+    return sensor.new_sensor(), 200
+
+
+@sensor_bp.route('/api/v1/sensor', methods=['GET'])
 def get_all_sensors():
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -24,11 +31,11 @@ def get_all_sensors():
 
     return jsonify(all_sensors), 200
 
-@sensor_bp.route('/api/v1/sensors/<int:sensor_id>', methods=['GET'])
-def get_one_sensor(sensor_id):
+@sensor_bp.route('/api/v1/sensor/<string:sensor_api_key>', methods=['GET'])
+def get_one_sensor(sensor_api_key):
     conn = get_db_connection()
     cursor = conn.cursor()
-    cursor.execute("""SELECT * FROM sensors WHERE sensor_id = ?""", (sensor_id,))
+    cursor.execute("""SELECT * FROM sensors WHERE sensor_id = ?""", (sensor_api_key,))
     sensor = cursor.fetchone()
     conn.close()
 
@@ -44,7 +51,7 @@ def get_one_sensor(sensor_id):
     else:
         return "Sensor not found", 404
     
-@sensor_bp.route('/api/v1/sensors/<int:sensor_id>', methods=['PUT'])
+@sensor_bp.route('/api/v1/sensor/<int:sensor_id>', methods=['PUT'])
 def update_sensor(sensor_id):
     conn = get_db_connection()
     cursor = conn.cursor()
@@ -59,7 +66,7 @@ def update_sensor(sensor_id):
     else:
         return "Sensor not found", 404
     
-@sensor_bp.route('/api/v1/sensors/<int:sensor_id>', methods=['DELETE'])
+@sensor_bp.route('/api/v1/sensor/<int:sensor_id>', methods=['DELETE'])
 def delete_sensor(sensor_id):
     conn = get_db_connection()
     cursor = conn.cursor()
