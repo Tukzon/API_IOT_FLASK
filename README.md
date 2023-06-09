@@ -1,7 +1,7 @@
 
 # API IOT Flask
 
-Desarrollo API REST para IOT en Flask Para Arquitecturas Emergentes.
+Desarrollo API REST IOT en Flask con SQLite.
 
 
 ## API Reference
@@ -62,4 +62,67 @@ Desarrollo API REST para IOT en Flask Para Arquitecturas Emergentes.
 
 ### SENSOR
 
-#### EN CONSTRUCCIÓN
+#### Create sensor
+
+```http
+  POST /api/v1/sensor
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `sensor_name`      | `string` |
+| `sensor_category` | `string` |
+|  `location_id`| `int` |
+|  `sensor_meta`| `string` |
+
+#### Get all sensors
+
+```http
+  GET /api/v1/sensor
+```
+
+#### Get sensor by API_KEY
+
+```http
+  GET /api/v1/sensor/${sensor_api_key}
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `sensor_api_key`      | `string` |
+
+#### Update sensor
+
+```http
+  PUT /api/v1/sensor/${sensor_api_key}
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `sensor_api_key`      | `string` |
+| `sensor_name`      | `string` |
+| `sensor_category` | `string` |
+|  `location_id`| `int` |
+|  `sensor_meta`| `string` |
+
+#### Delete sensor
+
+```http
+  DELETE /api/v1/sensor/${sensor_api_key}
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `sensor_api_key`      | `string` |
+
+### COMPANY
+
+#### Create company
+
+```http
+  POST /api/v1/company
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `company_name`      | `string` |

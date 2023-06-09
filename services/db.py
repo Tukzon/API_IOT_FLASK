@@ -35,6 +35,16 @@ def create_tables():
         location_meta TEXT NOT NULL
     )""")
 
+    #SENSOR
+    cursor.execute("""CREATE TABLE IF NOT EXISTS sensor(
+        location_id INTEGER NOT NULL,
+        sensor_id INTEGER PRIMARY KEY AUTOINCREMENT,
+        sensor_name TEXT NOT NULL,
+        sensor_category TEXT NOT NULL,
+        sensor_meta TEXT NOT NULL,
+        sensor_api_key TEXT NOT NULL
+    )""")
+
     conn.commit()
     conn.close()
     return True
