@@ -126,3 +126,16 @@ Desarrollo API REST IOT en Flask con SQLite.
 | Parameter | Type     |
 | :-------- | :------- |
 | `company_name`      | `string` |
+
+### ADMIN
+
+#### Create admin
+
+```http
+  POST /api/v1/admin
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `username`      | `string` |
+| `password` | `string` |
