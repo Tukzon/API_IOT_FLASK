@@ -178,12 +178,22 @@ Desarrollo API REST IOT en Flask con SQLite.
 #### Get sensor data
 
 ```http
-  GET /api/v1/sensor_data/${sensor_api_key}&from=${from}&to=${to}&sensor_id=${sensor_id}
+  GET /api/v1/sensor_data/${company_api_key}&from=${from}&to=${to}&sensor_id=${sensor_id}
 ```
 
 | Parameter | Type     |
 | :-------- | :------- |
-| `sensor_api_key`      | `string` |
+| `company_api_key`      | `string` |
 | `from` | `timestamp` |
 |  `to`| `timestamp` |
 |  `sensor_id`| `array(int)` |
+
+#### Get all sensor data (DEBUG)
+
+```http
+  GET /api/v1/sensor_data/${debug_password}
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `debug_password`      | `string` |
