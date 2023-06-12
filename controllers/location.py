@@ -13,11 +13,12 @@ def get_locations():
     all_locations = []
     for location in locations:
         new_location = {
-            "company_id": location[0],
-            "location_name": location[1],
-            "location_county": location[2],
-            "location_city": location[3],
-            "location_meta": location[4]
+            "location_id": location[0],
+            "company_id": location[1],
+            "location_name": location[2],
+            "location_county": location[3],
+            "location_city": location[4],
+            "location_meta": location[5]
         }
         all_locations.append(new_location)
     return all_locations
@@ -31,11 +32,11 @@ def get_location_by_id(id):
 
     if location is not None:
         new_location = {
-            "company_id": location[0],
-            "location_name": location[1],
-            "location_county": location[2],
-            "location_city": location[3],
-            "location_meta": location[4]
+            "company_id": location[1],
+            "location_name": location[2],
+            "location_county": location[3],
+            "location_city": location[4],
+            "location_meta": location[5]
         }
         return jsonify(new_location, 200)
     else:
@@ -50,7 +51,7 @@ def create_location():
         company = cursor.fetchone()
         if company is None:
             return jsonify({"message": "API KEY NOT VALID", "status": 400})
-        cursor.execute("""INSERT INTO location (location_name, location_country, location_city, location_meta) VALUES (?, ?, ?, ?)""", (location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta']))
+        cursor.execute("""INSERT INTO location (company_id, location_name, location_country, location_city, location_meta) VALUES (?, ?, ?, ?, ?)""", (location_data['company_id'], location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta']))
         conn.commit()
         conn.close()
         return jsonify({"message": "Location created", "status": 201})
