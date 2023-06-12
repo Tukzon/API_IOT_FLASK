@@ -31,6 +31,7 @@ Desarrollo API REST IOT en Flask con SQLite.
 
 | Parameter | Type     |
 | :-------- | :------- |
+| `company_api_key`      | `string` |
 | `location_name`      | `string` |
 | `location_country` | `string` |
 |  `location_city`| `string` |
@@ -45,6 +46,7 @@ Desarrollo API REST IOT en Flask con SQLite.
 | Parameter | Type     |
 | :-------- | :------- |
 | `id`      | `int` |
+| `company_api_key`      | `string` |
 
 #### Update location
 
@@ -59,6 +61,7 @@ Desarrollo API REST IOT en Flask con SQLite.
 | `location_country` | `string` |
 |  `location_city`| `string` |
 |  `location_meta`| `string` |
+| `company_api_key`      | `string` |
 
 ### SENSOR
 
@@ -139,3 +142,29 @@ Desarrollo API REST IOT en Flask con SQLite.
 | :-------- | :------- |
 | `username`      | `string` |
 | `password` | `string` |
+
+### SENSROR_DATA
+
+#### Create sensor data
+
+```http
+  POST /api/v1/sensor_data
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `sensor_id`      | `int` |
+| `sensor_data_variable` | `string` |
+|  `sensor_data_value`| `string` |
+
+#### Get sensor data
+
+```http
+  GET /api/v1/sensor_data/${sensor_api_key}&from=${from}&to=${to}
+```
+
+| Parameter | Type     |
+| :-------- | :------- |
+| `sensor_api_key`      | `string` |
+| `from` | `timestamp` |
+|  `to`| `timestamp` |

@@ -46,6 +46,10 @@ def create_location():
         conn = get_db_connection()
         cursor = conn.cursor()
         location_data = request.get_json()
+        cursor.execute("""SELECT * FROM company WHERE company_api_key = ?""", (location_data['company_api_key'],))
+        company = cursor.fetchone()
+        if company is None:
+            return jsonify({"message": "API KEY NOT VALID", "status": 400})
         cursor.execute("""INSERT INTO location (location_name, location_country, location_city, location_meta) VALUES (?, ?, ?, ?)""", (location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta']))
         conn.commit()
         conn.close()
@@ -56,20 +60,29 @@ def create_location():
 def update_location_by_id(id):
     conn = get_db_connection()
     cursor = conn.cursor()
+    location_data = request.get_json()
+    cursor.execute("""SELECT * FROM company WHERE company_api_key = ?""", (location_data['company_api_key'],))
+    company = cursor.fetchone()
+    if company is None:
+        return jsonify({"message": "API KEY NOT VALID", "status": 400})
     cursor.execute("""SELECT * FROM location WHERE company_id = ?""", (id,))
     location = cursor.fetchone()
     if location is not None:
-        location_data = request.get_json()
         cursor.execute("""UPDATE location SET location_name = ?, location_country = ?, location_city = ?, location_meta = ? WHERE company_id = ?""", (location_data['location_name'], location_data['location_country'], location_data['location_city'], location_data['location_meta'], id))
         conn.commit()
         conn.close()
         return jsonify({"message": "Location updated", "status": 200})
     else:
-        return jsonify({"message": "Location not found", "status": 404})
+        return jsonify({"message": "YOU CANNOT UPDATE THIS LOCATION", "status": 404})
     
 def delete_location_by_id(id):
     conn = get_db_connection()
     cursor = conn.cursor()
+    location_data = request.get_json()
+    cursor.execute("""SELECT * FROM company WHERE company_api_key = ?""", (location_data['company_api_key'],))
+    company = cursor.fetchone()
+    if company is None:
+        return jsonify({"message": "API KEY NOT VALID", "status": 400})
     cursor.execute("""SELECT * FROM location WHERE company_id = ?""", (id,))
     location = cursor.fetchone()
     if location is not None:
@@ -78,4 +91,4 @@ def delete_location_by_id(id):
         conn.close()
         return jsonify({"message": "Location deleted", "status": 200})
     else:
-        return jsonify({"message": "Location not found", "status": 404})
+        return jsonify({"message": "YOU CANNOT DELETE THIS LOCATION", "status": 404})
