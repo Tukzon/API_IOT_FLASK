@@ -1,5 +1,5 @@
 from services.db import get_db_connection
-from services.hash import hash
+from services.tools import hash
 from flask import Blueprint, request, jsonify
 
 ct_admin = Blueprint('ct_admin', __name__)

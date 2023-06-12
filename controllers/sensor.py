@@ -1,5 +1,5 @@
 from services.db import get_db_connection
-from services.api_key_gen import api_key_gen
+from services.tools import api_key_gen
 from flask import Blueprint, request, jsonify
 
 ct_sensor = Blueprint('ct_sensor', __name__)
