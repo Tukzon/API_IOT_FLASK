@@ -12,5 +12,5 @@ app.register_blueprint(sensor_data.sensor_data_bp)
 
 if __name__ == "__main__":
     create_tables()
-    app.run(host='0.0.0.0', port=8000, debug=True)
+    app.run(host='0.0.0.0', port=80, debug=True)
 
